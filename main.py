@@ -4,10 +4,46 @@ from lark.tree import Tree
 from lark import LarkError
 
 def recursively_transform(node, out_node):
+    if node.data == "leaf":
+        while hasattr(node.children[0],'data') and node.children[0].data == "leaf":
+            if "NOT" in out_node.keys():
+                out_node['NOT'] = not out_node['NOT']
+            else:
+                out_node['NOT'] = True
+            node = node.children[0]
+
+
+        while isinstance(node.children[0], Token) and node.children[0].type == "NT":
+
+            if "NOT" in out_node.keys():
+                out_node['NOT'] = not out_node['NOT']
+            else:
+                out_node['NOT'] = True
+            node = node.children[1]
+    else:
+        if node.data == "atom":
+            while hasattr(node.children[1], 'data') and node.children[1].data == "atom":
+                if "NOT" in out_node.keys():
+                    out_node['NOT'] = not out_node['NOT']
+                else:
+                    out_node['NOT'] = True
+                node = node.children[1]
+
+
+            while isinstance(node.children[0], Token) and node.children[0].type == "NT":
+                if "NOT" in out_node.keys():
+                    out_node['NOT'] = not out_node['NOT']
+                else:
+                    out_node['NOT'] = True
+                node = node.children[1]
+        else:
+            out_node['NOT'] = False
     out_node['type'] = node.data
+
     out_node['op'] = str(node.children[1])
     if node.data == 'leaf':
         out_node['id'] = str(node.children[0])
+        print(node)
         literal_token = node.children[2].children[0]
         literal_val = str(literal_token)
         if literal_token.type == 'STRING':
