@@ -120,7 +120,7 @@ def test():
     assert parse('Пол="М" AND Возраст>25 OR Стаж>.5') == obj_simple
 
     assert parse('Пол="М"') == obj_one
-
+    print(parse('(NOT (NOT (NOT (NOT (Gender = "m"))))) AND (NOT (NOT (NOT ((NOT (age > 25)) OR (seniority > 5 AND position!= "Manager")))))'))
     try:
         parse('')
     except Exception:
