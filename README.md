@@ -3,6 +3,7 @@ Simple logical expression parser using lark-parser module.
 Expression example:
 ```
 Пол="М" AND (Возраст>25 OR (Стаж>.5 AND Должность!="Руководитель"))
+'(NOT (NOT (NOT (NOT (Gender = "m"))))) AND (NOT (NOT (NOT ((NOT (age > 25)) OR (seniority > 5 AND position!= "Manager")))))'
 ```
 
 # Use 
