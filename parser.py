@@ -2,12 +2,14 @@ from lark import Lark
 
 ExpressionParser = Lark(r"""
     ?node: atom
-         | node OP atom
+         |node OP atom
     ?atom: leaf
-         | "(" node ")"     
-    leaf: ID COMP literal 
-    OP: "AND"
-      | "OR"
+         |NT* "(" node ")"
+    leaf: ID COMP literal
+         |NT*  "(" leaf ")"
+    NT: "NOT"i
+    OP: "AND"i
+      | "OR"i
     COMP: ">="
         | "<="
         | "!="
